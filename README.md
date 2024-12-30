@@ -1,92 +1,66 @@
-# Task-4--Sales-Prediction
-This repository contains a project focused on building a sales prediction model using machine learning. The goal is to forecast product sales based on various features and provide actionable insights that businesses can use to optimize their marketing strategies.
+# Sales Prediction Tool
 
-Objectives
+This project focuses on predicting product sales using various factors like advertising spend, target audience segmentation, and platform selection. The main goal was to create a machine learning model that businesses can use to understand future trends and optimize marketing strategies. Below, I’ve detailed what I did, the challenges I faced, and how I tackled them.
 
-Data Preprocessing:
+## Objectives
 
-Clean the dataset by handling missing values and removing outliers to ensure the model receives high-quality data. Missing values in critical columns were removed, and Z-scores were used to identify and eliminate outliers.
+1. **Data Preprocessing:**
 
-Normalize numerical features to bring all data into a comparable scale.
+Ensure the dataset is clean and ready for analysis. This included handling outliers, scaling numerical features, and encoding categorical data to make it suitable for machine learning models.
 
-Exploratory Data Analysis (EDA):
+2. **Understand the Data:**  
+   Before jumping into modeling, I explored the data with scatter plots and heatmaps to find correlations and trends. This was key to deciding which features to focus on.
 
-Visualize the dataset to understand relationships between variables and detect issues like multicollinearity or skewness.
+3. **Enhance the Dataset:**  
+   I created new features like `salary_to_debt_ratio` and `debt_to_net_worth_ratio` to provide better insights. I also normalized numeric features so the model could train effectively.
 
-Use scatter plots and correlation heatmaps to gain insights into the data.
+4. **Train a Predictive Model:**  
+   I used LightGBM for the task, as it’s fast and handles large datasets well. GridSearchCV helped tune hyperparameters, and metrics like RMSE and R² were used to evaluate the model.
 
-Feature Engineering:
+## Approach
 
-Create new features such as salary_to_debt_ratio, debt_to_net_worth_ratio, and log_net_worth to capture meaningful relationships in the data.
+1. **Data Preprocessing**  
+   - Cleaned missing values and dropped irrelevant columns (e.g., customer name and email).  
+   - Removed outliers using Z-score filtering with a threshold of 3.  
+   - Normalized the numeric data to improve model performance.
 
-Model Building and Tuning:
+2. **EDA (Exploratory Data Analysis)**  
+   - Plotted a scatterplot of annual salary vs. car purchase amount, colored by gender, to understand trends.  
+   - Generated a heatmap to check for correlations.
 
-Implemented the LightGBM regressor for sales prediction due to its efficiency and accuracy for tabular data.
+3. **Feature Engineering**  
+   - Added ratios and logarithmic transformations to make features more meaningful. These additional features helped capture relationships not immediately obvious from the raw data.
 
-Optimized the model using GridSearchCV to fine-tune parameters like max_depth, n_estimators, and learning_rate.
+4. **Model Selection and Training**  
+   - Chose LightGBM due to its speed and efficiency for regression problems.  
+   - Used GridSearchCV for hyperparameter tuning, testing combinations of depth, leaves, and learning rates.
 
-Model Evaluation:
+5. **Evaluation**  
+   - The initial MAE was 1,200+, and I reduced it to ~1,190 after tuning and feature engineering. R² improved to 0.977, showing a solid model fit.
 
-Evaluate the model using metrics such as Mean Absolute Error (MAE), Mean Squared Error (MSE), and R-squared (R²) to assess its performance.
+## Challenges Faced
 
-Compare results before and after optimization to highlight improvements.
+1. **Handling Missing Data**  
+   Some columns had significant missing values, especially critical ones like genre. For numerical features, I imputed values, but for categorical ones, I decided to drop rows entirely. Balancing data loss with model performance was tricky.
 
-Dataset
+2. **Outliers**  
+   Outliers were skewing the data significantly, especially in numeric fields like salary and debt. I applied Z-score filtering to remove them, which helped stabilize the model predictions.
 
-The dataset consists of sales-related data, including numerical and categorical features like salary, debt, net worth, and country of residence. Key steps in data processing included:
+3. **Feature Engineering**  
+   Coming up with the right features like `salary_to_debt_ratio` wasn’t straightforward. I tried different combinations to see what worked best in improving model accuracy.
 
-Dropping unnecessary columns such as customer names and emails.
+4. **Tuning LightGBM**  
+   Using GridSearchCV to tune hyperparameters was time-intensive but necessary. Striking a balance between computation time and model performance was challenging but worth it in the end.
 
-Imputing missing values in numerical columns with the median.
+## Results
 
-Removing outliers using Z-scores to ensure consistent model performance.
+- **MAE**: Brought down to ~1,190 after tuning and feature engineering.  
+- **R²**: Improved to 0.977, showing that the model is very reliable for this task.  
+- **MSE**: Stabilized around 2.46M, indicating fewer extreme errors in predictions.
 
-Encoding categorical variables and normalizing numerical features.
+## How to Use
 
-Key Challenges
-
-Handling Missing Data:
-
-Missing values in critical columns were removed to maintain data integrity. For numerical columns, the median was used to impute missing values.
-
-Outliers:
-
-Used Z-score analysis to remove rows with extreme values (Z > 3). This ensured that the model wasn’t affected by skewed data.
-
-Feature Engineering:
-
-Adding features like salary_to_debt_ratio and log_net_worth required careful thought to avoid introducing multicollinearity or unnecessary complexity.
-
-Hyperparameter Tuning:
-
-Fine-tuning the LightGBM model with GridSearchCV was time-intensive, but it significantly improved the accuracy and robustness of predictions.
-
-Results
-
-Initial Model Performance:
-
-MAE: ~1365
-
-MSE: ~3.4 million
-
-R²: ~0.96
-
-Final Model Performance (after optimization):
-
-MAE: 1190.39
-
-MSE: 2.46 million
-
-R²: 0.9768
-
-The improvements in metrics highlight the effectiveness of hyperparameter tuning and feature engineering.
-
-Usage
-
-Upload the dataset to your working directory.
-
-Follow the steps in the notebook to preprocess the data, build the model, and evaluate its performance.
-
-Conclusion
-
-This project demonstrates how thoughtful data preprocessing, feature engineering, and model optimization can lead to accurate sales predictions. The final model provides actionable insights for businesses to understand sales trends and optimize their marketing strategies effectively.
+1. Upload your dataset to Google Colab (or use any other Python environment).  
+2. Follow the preprocessing steps to clean and prepare the data.  
+3. Train the LightGBM model with the provided code.  
+4. Evaluate your results using RMSE and R² metrics.
